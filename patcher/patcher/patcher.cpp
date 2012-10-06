@@ -82,6 +82,8 @@ void ScenePatch(){
 		{
 			progress_total = ((float)current_index / (float)max_index) * 100;
 			progress_current = ((float)current_recv / (float)total_recv) * 100;
+
+			progress_total += (1.0f / (float)max_index) * progress_current;
 		}
 		{
 			SDL_RenderClear(renderer);
