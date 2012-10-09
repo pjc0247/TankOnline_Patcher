@@ -9,6 +9,8 @@
 #include <sdl_gdiplus.h>
 #include <sdl_ttf.h>
 
+#include <SDL_shape.h>
+
 #include "drawtext.h"
 #include "sprite.h"
 
@@ -127,15 +129,30 @@ void ScenePatch(){
 
 void SetupRC(){
 	SDL_Init(SDL_INIT_VIDEO);
-	window = SDL_CreateWindow(
+		
+	window = SDL_CreateShapedWindow(
 						"Patcher",
 						SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,
 						480,272,
 						SDL_WINDOW_SHOWN);
+	/*window = SDL_CreateWindow(
+						"Patcher",
+						SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,
+						480,272,
+						SDL_WINDOW_SHOWN);*/
 	renderer = SDL_CreateRenderer(
 						window,
 						-1,
 						0);
+
+	SDL_Surface *frame;
+	SDL_WindowShapeMode mode;
+	SDL_Color black = {0,0,0,255};
+
+	frame = SDL_LoadBMP("resource\\frame.bmp");
+	mode.mode = ShapeModeColorKey;
+	mode.parameters.colorKey = black;
+	SDL_SetWindowShape(window,frame,&mode);
 
 	TTF_Init();
 }
