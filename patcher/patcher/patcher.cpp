@@ -129,7 +129,16 @@ void ScenePatch(){
 
 void SetupRC(){
 	SDL_Init(SDL_INIT_VIDEO);
-		
+	
+	int x,y;
+	HWND taskbar;
+	RECT crt;
+
+	taskbar = FindWindowA("Shell_TrayWnd",NULL);
+	GetClientRect(taskbar,&crt);
+	x = crt.right - 480;
+	y = GetSystemMetrics(SM_CYSCREEN) - crt.bottom - 272;
+
 	window = SDL_CreateShapedWindow(
 						"Patcher",
 						SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,
@@ -153,6 +162,9 @@ void SetupRC(){
 	mode.mode = ShapeModeColorKey;
 	mode.parameters.colorKey = black;
 	SDL_SetWindowShape(window,frame,&mode);
+
+	SDL_SetWindowPosition(window,
+						x,y);
 
 	TTF_Init();
 }
